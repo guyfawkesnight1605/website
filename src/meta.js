@@ -31,7 +31,6 @@ export default {
     SetUrl(url){
         url = url.replace(/^\/|\/$/g, '')
         let f = (config.url + url).replace(/^\/|\/$/g, '')
-        f += '/'
 
         if ( document.head.querySelector('link[rel="canonical"]') === null){
             const meta = document.createElement('link');
