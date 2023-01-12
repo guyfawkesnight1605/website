@@ -3,6 +3,7 @@ const webpack = require('webpack')
 const { VueLoaderPlugin } = require('vue-loader')
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const config = require('../src/config')
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = (env, argv) => {
 
@@ -21,7 +22,8 @@ module.exports = (env, argv) => {
         output: {
             path: path.resolve(__dirname, './../dist'),
             publicPath: '/',
-            filename: 'bundle.js'
+            filename: 'bundle.js',
+            clean: true,
         },
 
         resolve: {
@@ -71,6 +73,11 @@ module.exports = (env, argv) => {
             }]
         },
         plugins: [
+            new CopyPlugin({
+                patterns: [
+                    { from: "static", to: "static" }
+                ],
+            }),
             new webpack.DefinePlugin({
                 __VUE_OPTIONS_API__: true,
                 __VUE_PROD_DEVTOOLS__: false,
