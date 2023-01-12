@@ -6,7 +6,7 @@ export default {
     SetTitle(title = config.title){
         if (document.title !== title ) document.title = title
         document.head.querySelector('meta[property="og:title"]').content = title
-        if (title.length > 60) console.warning("title length is invalid", title)
+        if (title.length > 60) console.warn("title length is invalid", title)
     },
 
     //150 letters
@@ -14,14 +14,14 @@ export default {
         if (document.head.querySelector('meta[name="description"]').content === description) return
         document.head.querySelector('meta[name="description"]').content = description
         document.head.querySelector('meta[property="og:description"]').content = description
-        if (description.length > 150) console.warning("description length is invalid", description)
+        if (description.length > 150) console.warn("description length is invalid", description)
     },
 
     //max 10 keywords
     SetKeywords(keywords = config.keywords ){
         if (document.head.querySelector('meta[name="keywords"]').content === keywords) return
         document.head.querySelector('meta[name="keywords"]').content = keywords
-        if (keywords.split(',').length > 10) console.warning("keywords length is invalid", keywords)
+        if (keywords.split(',').length > 10) console.warn("keywords length is invalid", keywords)
     },
     SetImage(image = config.img){
         image = image.replace(/^\/|\/$/g, '')
