@@ -28,6 +28,13 @@ module.exports = (env, argv) => merge( base(env, argv), {
                 renderAfterElementExists: '#website',
             },
 
+            postProcess: function (context) {
+                context.html = context.html.replace(
+                    /<script src="w3counter">/i,
+                    `<script type="text/javascript" src="https://www.w3counter.com/tracker.js?id=148062">`
+                )
+            }
+
         }),
     ]
 
