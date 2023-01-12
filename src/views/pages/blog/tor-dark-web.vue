@@ -76,6 +76,7 @@ export default {
     Meta.SetKeywords("tor, darkweb, dark web, darknet, dark net, deep web")
     Meta.SetImage("/static/img/articles/tor-dark-web.jpeg")
     Meta.SetUrl("tor-dark-web")
+    Meta.SetType("article")
   }
 }
 </script>

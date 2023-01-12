@@ -109,6 +109,7 @@ export default {
     Meta.SetKeywords("access, deep web, deepweb, dark net, darknet, dark web, access deep web")
     Meta.SetImage("/static/img/articles/how-to-access-the-deep-web.jpg")
     Meta.SetUrl("how-to-access-the-deep-web")
+    Meta.SetType("article")
   }
 }
 </script>

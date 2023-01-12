@@ -181,6 +181,7 @@ export default {
     Meta.SetKeywords()
     Meta.SetImage()
     Meta.SetUrl("/")
+    Meta.SetType()
   }
 
 }
