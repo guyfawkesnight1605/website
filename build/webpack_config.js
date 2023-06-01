@@ -22,7 +22,8 @@ module.exports = (env, argv) => {
         output: {
             path: path.resolve(__dirname, './../dist'),
             publicPath: '/',
-            filename: 'bundle.js'
+            filename: 'bundle.js',
+            clean: true,
         },
 
         resolve: {
@@ -91,6 +92,7 @@ module.exports = (env, argv) => {
                 description: config.description, //150
                 keywords: config.keywords,
                 url: config.url,
+                img: config.url + config.img.replace(/^\/|\/$/g, ''),
                 template:  path.resolve(__dirname + '/../src/index.hbs'),
                 filename: path.resolve(__dirname + `/../dist/index.html`) //relative to root of the application
             }),

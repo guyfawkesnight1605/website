@@ -112,6 +112,7 @@ export default {
     Meta.SetKeywords("dark web, browser, browsers, tor, i2p, download")
     Meta.SetImage("/static/img/articles/dark-web-browser.jpeg")
     Meta.SetUrl("dark-web-browser")
+    Meta.SetType("article")
   }
 }
 </script>
