@@ -4,6 +4,8 @@ const merge = require('webpack-merge')
 const TerserPlugin = require('terser-webpack-plugin')
 const CompressionPlugin = require("compression-webpack-plugin");
 const PrerenderSPAPlugin = require('prerender-spa-plugin-next')
+const zopfli = require("@gfx/zopfli");
+const zlib = require("zlib");
 
 module.exports = (env, argv) => merge( base(env, argv), {
 
@@ -13,7 +15,32 @@ module.exports = (env, argv) => merge( base(env, argv), {
     },
 
     plugins: [
-        new CompressionPlugin(),
+        //zopfli compression
+        new CompressionPlugin({
+            filename: "[path][base].gz",
+            compressionOptions: {
+                numiterations: 15,
+            },
+            algorithm(input, compressionOptions, callback) {
+                return zopfli.gzip(input, compressionOptions, callback);
+            },
+            test: /\.(js|css|html|svg|png|jpg|jpeg)$/,
+            threshold: 10240,
+            minRatio: 0.8,
+        }),
+        //brotli
+        new CompressionPlugin({
+            filename: "[path][base].br",
+            algorithm: "brotliCompress",
+            test: /\.(js|css|html|svg|png|jpg|jpeg)$/,
+            compressionOptions: {
+                params: {
+                    [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
+                },
+            },
+            threshold: 10240,
+            minRatio: 0.8,
+        }),
         new TerserPlugin(),
         new PrerenderSPAPlugin({
 
@@ -26,6 +53,13 @@ module.exports = (env, argv) => merge( base(env, argv), {
                 maxConcurrentRoutes: 4,
                 renderAfterDocumentEvent: "render-event",
                 renderAfterElementExists: '#website',
+            },
+
+            postProcess: function (context) {
+                context.html = context.html.replace(
+                    /<script src="w3counter">/i,
+                    `<script type="text/javascript" src="https://www.w3counter.com/tracker.js?id=148062">`
+                )
             },
 
         }),

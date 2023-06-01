@@ -1,0 +1,39 @@
+name: Release Development
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  pre-release-linux:
+    name: "Release Development"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout wallet
+        uses: actions/checkout@v3
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: install dependencies
+        run: npm install
+
+      - name: npm build
+        run: npm run build
+
+      - name: zip
+        run: (cd dist; zip -r ../build.zip *)
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "development"
+          prerelease: true
+          title: "Development Build"
+          files: |
+            ./build.zip

@@ -30,8 +30,27 @@ export default {
     },
     SetUrl(url){
         url = url.replace(/^\/|\/$/g, '')
-        if (document.head.querySelector('link[rel="canonical"]').href === config.url+url) return
-        document.head.querySelector('link[rel="canonical"]').href = config.url+url
-        document.head.querySelector('meta[property="og:url"]').content = config.url+url
+        let f = (config.url + url).replace(/^\/|\/$/g, '')
+
+        if ( document.head.querySelector('link[rel="canonical"]') === null){
+            const meta = document.createElement('link');
+            meta.setAttribute('rel', 'canonical');
+            meta.setAttribute('href', '');
+            document.getElementsByTagName('head')[0].appendChild(meta);
+        }
+
+        if ( document.head.querySelector('meta[property="og:url"]') === null){
+            const meta = document.createElement('meta');
+            meta.setAttribute('property', 'og:url');
+            meta.setAttribute('content', '');
+            document.getElementsByTagName('head')[0].appendChild(meta);
+        }
+
+        if (document.head.querySelector('link[rel="canonical"]').href === f) return
+        document.head.querySelector('link[rel="canonical"]').href = f
+        document.head.querySelector('meta[property="og:url"]').content = f
+    },
+    SetType(type="website"){
+        document.head.querySelector('meta[property="og:type"]').content = type
     }
 }
